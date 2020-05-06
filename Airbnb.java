@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
+import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.JavascriptExecutor;
@@ -107,8 +108,8 @@ public class Airbnb {
 		driver.findElementByXPath("(//span[text()='More filters'])[1]").click();
 		Thread.sleep(500);
 		for (int k = 0; k < 3; k++) {
-			driver.findElementByXPath("(//button[@aria-label='increase value'])[1]").click();
 			driver.findElementByXPath("(//button[@aria-label='increase value'])[2]").click();
+			driver.findElementByXPath("(//button[@aria-label='increase value'])[3]").click();
 		}
 
 //			9) Check the Amenities with Kitchen, Facilities with Free parking on premisses, Property as House and Host Language as English
@@ -137,12 +138,12 @@ public class Airbnb {
 		Set<String> allWindows = driver.getWindowHandles();
 		List<String> allLists = new ArrayList<String>(allWindows);
 		driver.switchTo().window(allLists.get(1));
-		Thread.sleep(8000);
-		driver.executeScript("window.scrollBy(0, 1250)");
+		Thread.sleep(10000);
+		driver.executeScript("window.scrollBy(0, 1230)");
 //			11) Click on "Show all * amenities"
-		WebElement eleShowAll = driver.findElementByXPath("(//div[@class='_1p3joamp']//button)[1]");
-		wait.until(
-				ExpectedConditions.visibilityOf(driver.findElementByXPath("(//div[@class='_1p3joamp']//button)[1]")));
+		WebElement eleShowAll = driver.findElementByXPath("//button[contains(text(),'Show all') and contains(text(),'amenities')]");
+		//wait.until(
+			//	ExpectedConditions.visibilityOf(driver.findElementByXPath("//[contains(text(),'Show all') and contains(text(),'amenities')]")));
 		js.executeScript("arguments[0].click()", eleShowAll);
 
 		Thread.sleep(2000);
@@ -184,10 +185,25 @@ public class Airbnb {
 //			System.out.println(each.getKey() + " ---------- " + each.getValue());
 //
 //		}
-		for (int b = 0; b < 2; b++) {
+		for (int b=0;b<2;b++) {
 			driver.findElementByXPath("//div[@class='_1mlprnc' and contains(@style,'right')]").click();
 		}
 		Thread.sleep(2000);
+
+//		for (int b=1; b<=100; b++) {
+//			try {
+//			if(driver.findElementByXPath("//div[@class='_1mlprnc' and contains(@style,'right')]").isEnabled()){
+//			driver.findElementByXPath("//div[@class='_1mlprnc' and contains(@style,'right')]").click();
+//			
+//			}else {
+//				break;
+//			}
+//			}
+//		catch(NoSuchElementException e) {
+//			break;
+//		}
+//		}
+//		Thread.sleep(2000);
 		List<WebElement> lstBedrooms1 = driver
 				.findElementsByXPath("//div[@class='_7y0rt79']//following-sibling::div[@class='_1p3joamp']");
 		List<WebElement> lstBeds1 = driver
@@ -211,3 +227,4 @@ public class Airbnb {
 	}
 
 }
+
